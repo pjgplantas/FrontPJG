@@ -8,13 +8,13 @@
           </div>
         </b-col>
         <b-col>
-          <b-form class="cform" @submit.prevent="login" v-if="show"
+          <b-form class="cform" @submit.prevent="btLogin" v-if="show"
             ><div class="dlogin">PJG Plantas</div>
             <div class="emsen">Email:</div>
             <b-form-group id="input-group-1">
               <b-form-input
-                v-model="form.email"
-                type="email"
+                v-model="form.username"
+                type="text  "
                 style="
                   background: white;
                   border-style: none none solid none;
@@ -55,25 +55,32 @@
 </template>
 
 <script>
+// import axios from "axios";
+import { mapActions } from "vuex";
+import store from "@/store";
 export default {
+  created() {
+    store.state.token = "";
+  },
   data() {
     return {
       form: {
-        email: "",
+        username: "",
         password: "",
       },
       show: true,
     };
   },
   methods: {
-    login() {
-      if (
-        this.form.email === "admin@admin.com" &&
-        this.form.password === "admin"
-      ) {
-        alert("ok");
+    ...mapActions(["login"]),
+    async btLogin() {
+      try {
+        const data = await this.$post("token/", this.form);
+        // console.log(data);
+        store.state.token = data.access;
         this.$router.push("/");
-      } else {
+        // }
+      } catch {
         alert("Email ou senha incorretos");
       }
     },
@@ -123,8 +130,7 @@ body {
     #00bf8f
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background-repeat: no-repeat;
-  height:100vh ;
-  
+  height: 100vh;
 }
 .dlogin {
   font-size: 35px;
@@ -211,8 +217,7 @@ input:-internal-autofill-selected {
 }
 
 @media (max-width: 844px) {
-
-  body{
+  body {
     background-color: #001510;
   }
   .cform {
@@ -255,14 +260,12 @@ input:-internal-autofill-selected {
     height: 200px;
   }
 
-  .logo{
+  .logo {
     align-items: center;
   }
   .col {
-  
     padding: 10px;
     margin: 0 20% 0 0;
   }
- 
 }
 </style>

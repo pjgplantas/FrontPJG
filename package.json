@@ -18,6 +18,7 @@
     "pinia": "^2.0.21",
     "vue": "^2.6.11",
     "vue-axios": "^3.4.1",
+    "vue-plugin-axios": "^1.0.14",
     "vue-router": "^3.2.0",
     "vuex": "^2.5.0"
   },

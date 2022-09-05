@@ -18,7 +18,6 @@
       >
       </b-carousel-slide>
     </b-carousel>
-    {{ plantas }}
     <div v-for="planta in plantas" :key="planta.id">
       <div class="titlepl">{{ planta.tipo_planta }}</div>
       <b-container class="bv-example-row">
@@ -47,7 +46,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 export default {
   name: "Planta",
   data() {
@@ -61,8 +60,7 @@ export default {
   },
   methods: {
     async getPlanta() {
-      const { data } = await axios.get("http://127.0.0.1:8000/plantas/");
-      this.plantas = data;
+      this.plantas = await this.$get("plantas/");
     },
   },
 };
